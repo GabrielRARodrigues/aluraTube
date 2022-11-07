@@ -4,18 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GabrielRARodrigues/aluraTube.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GabrielRARodrigues/aluraTube/issues"
+  },
+  "homepage": "https://github.com/GabrielRARodrigues/aluraTube#readme",
   "dependencies": {
-    "next": "13.0.2",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "next": "^13.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "styled-components": "^5.3.6"
   }
 }
