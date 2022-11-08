@@ -4,8 +4,12 @@ import { CSSReset } from '../src/components/CSSReset'
 import Menu from '../src/components/Menu'
 import { StyledTimeline } from '../src/components/Timeline'
 
-export default function HomePage() {
-  console.log(config.playlists)
+function HomePage() {
+  const estilosDaHomePage = {
+    // backgroundColor: "red"
+  }
+
+  // console.log(config.playlists);
 
   return (
     <>
@@ -15,15 +19,26 @@ export default function HomePage() {
           display: 'flex',
           flexDirection: 'column',
           flex: 1
+          // backgroundColor: "red",
         }}
       >
         <Menu />
         <Header />
-        <TimeLine playlists={config.playlists} />
+        <Timeline playlists={config.playlists}>Conteúdo</Timeline>
       </div>
     </>
   )
 }
+
+export default HomePage
+
+// function Menu() {
+//     return (
+//         <div>
+//             Menu
+//         </div>
+//     )
+// }
 
 const StyledHeader = styled.div`
   img {
@@ -43,10 +58,11 @@ const StyledHeader = styled.div`
 function Header() {
   return (
     <StyledHeader>
+      {/* <img src="banner" /> */}
       <section className="user-info">
-        <img src={`https://github.com/${config.github}.png`} alt="" />
+        <img src={`https://github.com/${config.github}.png`} />
         <div>
-          <h2>{config.nome}</h2>
+          <h2>{config.name}</h2>
           <p>{config.job}</p>
         </div>
       </section>
@@ -54,13 +70,16 @@ function Header() {
   )
 }
 
-function TimeLine(props) {
-  const playlistNames = Object.keys(props.playlists)
-
+function Timeline(propriedades) {
+  // console.log("Dentro do componente", propriedades.playlists);
+  const playlistNames = Object.keys(propriedades.playlists)
+  // Statement
+  // Retorno por expressão
   return (
     <StyledTimeline>
       {playlistNames.map(playlistName => {
-        const videos = props.playlists[playlistName]
+        const videos = propriedades.playlists[playlistName]
+        console.log(playlistName)
         console.log(videos)
         return (
           <section>
@@ -69,8 +88,8 @@ function TimeLine(props) {
               {videos.map(video => {
                 return (
                   <a href={video.url}>
-                    <img src={video.thumb} alt="" />
-                    <span>{video.titulo}</span>
+                    <img src={video.thumb} />
+                    <span>{video.title}</span>
                   </a>
                 )
               })}
