@@ -1,3 +1,4 @@
+import { createClient } from '@supabase/supabase-js'
 import { useState } from 'react'
 import { StyledRegisterVideo } from './styles'
 
@@ -18,11 +19,20 @@ function useForm(propsDoForm) {
     }
   }
 }
+const PROJECT_URL = 'https://qxgdsdhflozqevvjrxxx.supabase.co'
+
+const PUBLIC_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF4Z2RzZGhmbG96cWV2dmpyeHh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjgxNjk4NzMsImV4cCI6MTk4Mzc0NTg3M30.aeAeh0IAgAbt2zHtCJB0tK7aBIlTcOaU2keYCLFhc1w'
+
+const supabase = createClient(PROJECT_URL, PUBLIC_KEY)
 
 export function RegisterVideo() {
   const [formVisivel, setFormVisivel] = useState(false)
   const formCadastro = useForm({
-    initialValues: { titulo: 'Pokemon', url: 'https://youtube..' }
+    initialValues: {
+      titulo: 'Pokemon',
+      url: 'https://img.youtube.com/vi/QsqatJxAUtk/hqdefault.jpg'
+    }
   })
   return (
     <StyledRegisterVideo>
@@ -38,7 +48,20 @@ export function RegisterVideo() {
         <form
           onSubmit={event => {
             event.preventDefault()
-
+            supabase
+              .from('video')
+              .insert({
+                title: formCadastro.values.titulo,
+                url: formCadastro.values.url,
+                thumb: 'https://img.youtube.com/vi/QsqatJxAUtk/hqdefault.jpg',
+                playlist: 'jogos'
+              })
+              .then(oqueveio => {
+                console.log(oqueveio)
+              })
+              .catch(err => {
+                console.log(err)
+              })
             setFormVisivel(false)
             formCadastro.clearForm()
           }}

@@ -1,17 +1,30 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import config from '../config.json'
 import styled from 'styled-components'
 import { CSSReset } from '../src/components/CSSReset'
 import Menu from '../src/components/Menu'
 import { StyledTimeline } from '../src/components/Timeline'
 import React from 'react'
+import { videoService } from '../src/services/videoService'
 
 function HomePage() {
-  const estilosDaHomePage = {
-    // backgroundColor: "red"
-  }
+  const service = videoService()
   const [valorDoFiltro, setValorDoFiltro] = useState('')
 
+  const [playlists, setPlaylists] = useState({})
+
+  useEffect(() => {
+    service.getAllVideos().then(dados => {
+      const novasPlaylists = { ...playlists }
+      dados.data.forEach(video => {
+        if (!novasPlaylists[video.playlist]) {
+          novasPlaylists[video.playlist] = []
+        }
+        novasPlaylists[video.playlist].push(video)
+      })
+      setPlaylists(novasPlaylists)
+    })
+  }, [])
   return (
     <>
       <div
@@ -19,7 +32,6 @@ function HomePage() {
           display: 'flex',
           flexDirection: 'column',
           flex: 1
-          // backgroundColor: "red",
         }}
       >
         <Menu
@@ -27,7 +39,7 @@ function HomePage() {
           setValorDoFiltro={setValorDoFiltro}
         />
         <Header />
-        <Timeline searchValue={valorDoFiltro} playlists={config.playlists}>
+        <Timeline searchValue={valorDoFiltro} playlists={playlists}>
           Conteúdo
         </Timeline>
       </div>
